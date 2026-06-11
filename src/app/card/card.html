@@ -1,0 +1,29 @@
+<div class="card-grid">
+  @for (dog of dogs; track dog.name) {
+    <mat-card class="example-card" appearance="outlined">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{ dog.name }}</mat-card-title>
+        <mat-card-subtitle>{{ dog.breed }}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image [src]="dog.img" [alt]="dog.name">
+      <mat-card-content>
+        <p>{{ dog.desc }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button matFab extended>
+          <mat-icon>favorite</mat-icon>
+          Basic
+        </button>
+        <button matFab extended disabled>
+          <mat-icon>favorite</mat-icon>
+          Disabled
+        </button>
+        <a matFab extended routerLink=".">
+          <mat-icon>favorite</mat-icon>
+          Link
+        </a>
+      </mat-card-actions>
+    </mat-card>
+  }
+</div>
