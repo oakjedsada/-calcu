@@ -1,0 +1,150 @@
+<div class="loan-container">
+
+  <!-- Top Row: Form + Summary -->
+  <div class="top-row">
+
+    <!-- Left: Input Form -->
+    <mat-card class="input-card" appearance="outlined">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>calculate</mat-icon>
+        <mat-card-title>ข้อมูลเงินกู้ กยศ.</mat-card-title>
+        <mat-card-subtitle>กรอกข้อมูลเพื่อคำนวณ</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+
+        <p class="form-section-label">ข้อมูลการกู้ยืม</p>
+        <div class="form-col">
+          <mat-form-field appearance="outline">
+            <mat-label>ยอดกู้สะสมปัจจุบัน (บาท)</mat-label>
+            <input matInput type="number" [ngModel]="totalBorrowed()" (ngModelChange)="totalBorrowed.set(+$event)" />
+            <mat-icon matSuffix>payments</mat-icon>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>จะกู้เพิ่มอีกกี่ปี</mat-label>
+            <input matInput type="number" [ngModel]="extraYears()" (ngModelChange)="extraYears.set(+$event)" />
+            <mat-icon matSuffix>school</mat-icon>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>ยอดกู้เพิ่มต่อปี (บาท)</mat-label>
+            <input matInput type="number" [ngModel]="extraPerYear()" (ngModelChange)="extraPerYear.set(+$event)" />
+            <mat-icon matSuffix>add_circle</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <p class="form-section-label">ตั้งค่าการผ่อนชำระ</p>
+        <div class="form-col">
+          <mat-form-field appearance="outline">
+            <mat-label>อัตราดอกเบี้ย (%/ปี)</mat-label>
+            <input matInput type="number" [ngModel]="interestRate()" (ngModelChange)="interestRate.set(+$event)" />
+            <mat-icon matSuffix>percent</mat-icon>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>ระยะเวลาผ่อนชำระ (ปี)</mat-label>
+            <input matInput type="number" [ngModel]="repaymentYears()" (ngModelChange)="repaymentYears.set(+$event)" />
+            <mat-icon matSuffix>schedule</mat-icon>
+          </mat-form-field>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Right: Summary Cards -->
+    <div class="summary-grid">
+      <mat-card class="summary-card principal" appearance="outlined">
+        <mat-card-content>
+          <div class="summary-icon-wrap"><mat-icon>account_balance</mat-icon></div>
+          <div class="summary-label">ยอดหนี้เมื่อเริ่มผ่อน</div>
+          <div class="summary-value">{{ summary().principal | number:'1.0-0' }}</div>
+          <div class="summary-unit">บาท</div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="summary-card annual" appearance="outlined">
+        <mat-card-content>
+          <div class="summary-icon-wrap"><mat-icon>event_repeat</mat-icon></div>
+          <div class="summary-label">ค่างวดต่อปี</div>
+          <div class="summary-value">{{ summary().annualPayment | number:'1.0-0' }}</div>
+          <div class="summary-unit">บาท</div>
+          <div class="summary-sub">≈ {{ summary().annualPayment / 12 | number:'1.0-0' }} บาท/เดือน</div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="summary-card interest" appearance="outlined">
+        <mat-card-content>
+          <div class="summary-icon-wrap"><mat-icon>trending_up</mat-icon></div>
+          <div class="summary-label">ดอกเบี้ยรวมทั้งหมด</div>
+          <div class="summary-value">{{ summary().totalInterest | number:'1.0-0' }}</div>
+          <div class="summary-unit">บาท</div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="summary-card total" appearance="outlined">
+        <mat-card-content>
+          <div class="summary-icon-wrap"><mat-icon>paid</mat-icon></div>
+          <div class="summary-label">ยอดชำระทั้งหมด</div>
+          <div class="summary-value">{{ summary().totalPayment | number:'1.0-0' }}</div>
+          <div class="summary-unit">บาท</div>
+          <div class="summary-sub">ใน {{ repaymentYears() }} ปี</div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+  </div>
+
+  <!-- Chart -->
+  <mat-card class="chart-card" appearance="outlined">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>show_chart</mat-icon>
+      <mat-card-title>กราฟการผ่อนชำระรายปี</mat-card-title>
+      <mat-card-subtitle>เงินต้น / ดอกเบี้ย / ยอดคงเหลือ</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="chart-wrapper">
+        <canvas baseChart [data]="chartData()" [options]="chartOptions" type="line"></canvas>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Table -->
+  <mat-card class="table-card" appearance="outlined">
+
+    <mat-card-header>
+      <mat-icon mat-card-avatar>table_chart</mat-icon>
+      <mat-card-title>ตารางผ่อนชำระรายปี</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="table-wrapper">
+        <table mat-table [dataSource]="summary().schedule">
+          <ng-container matColumnDef="year">
+            <th mat-header-cell *matHeaderCellDef>ปีที่</th>
+            <td mat-cell *matCellDef="let row">{{ row.year }}</td>
+          </ng-container>
+          <ng-container matColumnDef="openingBalance">
+            <th mat-header-cell *matHeaderCellDef>ยอดต้นงวด</th>
+            <td mat-cell *matCellDef="let row">{{ row.openingBalance | number:'1.0-0' }}</td>
+          </ng-container>
+          <ng-container matColumnDef="principal">
+            <th mat-header-cell *matHeaderCellDef>เงินต้นที่ชำระ</th>
+            <td mat-cell *matCellDef="let row">{{ row.principal | number:'1.0-0' }}</td>
+          </ng-container>
+          <ng-container matColumnDef="interest">
+            <th mat-header-cell *matHeaderCellDef>ดอกเบี้ย</th>
+            <td mat-cell *matCellDef="let row">{{ row.interest | number:'1.0-0' }}</td>
+          </ng-container>
+          <ng-container matColumnDef="payment">
+            <th mat-header-cell *matHeaderCellDef>ค่างวด</th>
+            <td mat-cell *matCellDef="let row">{{ row.payment | number:'1.0-0' }}</td>
+          </ng-container>
+          <ng-container matColumnDef="closingBalance">
+            <th mat-header-cell *matHeaderCellDef>ยอดคงเหลือ</th>
+            <td mat-cell *matCellDef="let row">{{ row.closingBalance | number:'1.0-0' }}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+
+</div>

@@ -1,0 +1,194 @@
+.loan-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Top Row: Form + Summary side by side ── */
+.top-row {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .top-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Input Card ── */
+.input-card {
+  border-radius: 16px !important;
+  box-shadow: 0 2px 16px rgba(2, 119, 189, 0.1) !important;
+  border: 1px solid rgba(41, 182, 246, 0.25) !important;
+}
+
+.input-card mat-icon[mat-card-avatar] {
+  font-size: 2rem;
+  width: 40px;
+  height: 40px;
+  color: #0277bd;
+}
+
+.form-section-label {
+  margin: 1.2rem 0 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #0288d1;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.form-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.form-col mat-form-field {
+  width: 100%;
+}
+
+/* ── Summary Cards (2x2 grid on the right) ── */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  align-content: start;
+}
+
+.summary-card {
+  border-radius: 16px !important;
+  border: none !important;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08) !important;
+}
+
+.summary-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  border-radius: 16px 16px 0 0;
+}
+
+.summary-card.principal::before { background: #0277bd; }
+.summary-card.annual::before    { background: #2e7d32; }
+.summary-card.interest::before  { background: #e65100; }
+.summary-card.total::before     { background: #6a1b9a; }
+
+.summary-card mat-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.4rem 1rem 1.2rem !important;
+  gap: 0.2rem;
+}
+
+.summary-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.3rem;
+}
+
+.summary-card.principal .summary-icon-wrap { background: #e3f2fd; }
+.summary-card.annual    .summary-icon-wrap { background: #e8f5e9; }
+.summary-card.interest  .summary-icon-wrap { background: #fff3e0; }
+.summary-card.total     .summary-icon-wrap { background: #f3e5f5; }
+
+.summary-card mat-icon { font-size: 1.6rem; width: 1.6rem; height: 1.6rem; }
+.summary-card.principal mat-icon { color: #0277bd; }
+.summary-card.annual    mat-icon { color: #2e7d32; }
+.summary-card.interest  mat-icon { color: #e65100; }
+.summary-card.total     mat-icon { color: #6a1b9a; }
+
+.summary-label {
+  font-size: 0.75rem;
+  color: #999;
+  font-weight: 500;
+}
+
+.summary-value {
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.summary-card.principal .summary-value { color: #0277bd; }
+.summary-card.annual    .summary-value { color: #2e7d32; }
+.summary-card.interest  .summary-value { color: #e65100; }
+.summary-card.total     .summary-value { color: #6a1b9a; }
+
+.summary-unit {
+  font-size: 0.72rem;
+  color: #bbb;
+  margin-top: -1px;
+}
+
+.summary-sub {
+  font-size: 0.72rem;
+  color: #bbb;
+  margin-top: 2px;
+}
+
+/* ── Chart & Table ── */
+.chart-card,
+.table-card {
+  border-radius: 16px !important;
+  box-shadow: 0 2px 16px rgba(2, 119, 189, 0.1) !important;
+  border: 1px solid rgba(41, 182, 246, 0.2) !important;
+}
+
+.chart-card mat-icon[mat-card-avatar],
+.table-card mat-icon[mat-card-avatar] { color: #0277bd; }
+
+.chart-wrapper {
+  position: relative;
+  height: 260px;
+  margin-top: 0.5rem;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  margin-top: 0.5rem;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+table { width: 100%; }
+
+th.mat-header-cell {
+  font-weight: 700;
+  color: #0277bd;
+  background: #e1f5fe;
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+tr.mat-row:nth-child(even) { background: #f5fbff; }
+tr.mat-row:hover {
+  background: #e1f5fe;
+  transition: background 0.15s;
+}
+
+td.mat-cell, th.mat-header-cell {
+  padding: 12px 16px !important;
+  text-align: right;
+}
+
+td.mat-column-year, th.mat-column-year {
+  text-align: center;
+  font-weight: 700;
+  color: #0277bd;
+}
