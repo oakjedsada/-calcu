@@ -1,0 +1,133 @@
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e0f0fb;
+  padding: 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: fit-content;
+  position: sticky;
+  top: 1.5rem;
+  box-shadow: 0 2px 12px rgba(2, 119, 189, 0.07);
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0277bd;
+  border-bottom: 2px solid #e0f0fb;
+  padding-bottom: 0.75rem;
+}
+
+.sidebar-header mat-icon {
+  font-size: 1.3rem;
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+.sidebar-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.sidebar-section h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0 0 0.3rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0277bd;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.sidebar-section h3 mat-icon {
+  font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
+  color: #29b6f6;
+}
+
+.sidebar-section ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.sidebar-section ul li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  background: #f0f8ff;
+}
+
+.sidebar-section ul li .label {
+  color: #546e7a;
+}
+
+.sidebar-section ul li .value {
+  font-weight: 600;
+  color: #01579b;
+}
+
+.sidebar-note {
+  margin: 0.25rem 0 0;
+  font-size: 0.75rem;
+  color: #90a4ae;
+  line-height: 1.4;
+}
+
+.tip-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.tip {
+  font-size: 0.82rem;
+  color: #546e7a;
+  background: #f0f8ff;
+  border-left: 3px solid #29b6f6;
+  padding: 0.35rem 0.6rem;
+  border-radius: 0 6px 6px 0;
+  line-height: 1.4;
+}
+
+.sidebar-contact {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.83rem;
+  color: #0277bd;
+  background: #e0f0fb;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  margin-top: auto;
+}
+
+.sidebar-contact mat-icon {
+  font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 100%;
+    position: static;
+  }
+}
