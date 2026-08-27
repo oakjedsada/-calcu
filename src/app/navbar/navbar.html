@@ -1,11 +1,33 @@
-<nav>
+<aside class="sidebar" [class.collapsed]="sidebar.collapsed()">
+
   <div class="logo">
     <span class="logo-icon">💙</span>
-    <span class="logo-text">กยศ. Calculator</span>
+    <span class="logo-text">กยศ.</span>
   </div>
+
   <ul class="menu">
-    <li><a href="/">หน้าแรก</a></li>
-    <li><a href="/about">เกี่ยวกับ</a></li>
-    <li><a href="/contact">ติดต่อ</a></li>
+    <li>
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="menu-item">
+        <span class="menu-icon">🏠</span>
+        <span class="menu-label">หน้าแรก</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/profile" routerLinkActive="active" class="menu-item">
+        <span class="menu-icon">👤</span>
+        <span class="menu-label">โปรไฟล์</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/about" routerLinkActive="active" class="menu-item">
+        <span class="menu-icon">ℹ️</span>
+        <span class="menu-label">เกี่ยวกับ</span>
+      </a>
+    </li>
   </ul>
-</nav>
+
+  <button class="toggle-btn" (click)="sidebar.toggle()">
+    {{ sidebar.collapsed() ? '▶' : '◀' }}
+  </button>
+
+</aside>

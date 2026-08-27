@@ -1,0 +1,85 @@
+<div class="form-page">
+  <mat-card class="input-card" appearance="outlined">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>calculate</mat-icon>
+      <mat-card-title>ข้อมูลเงินกู้ กยศ.</mat-card-title>
+      <mat-card-subtitle>กรอกข้อมูลเพื่อคำนวณ</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+
+      @if (savedProfiles().length > 0) {
+        <p class="form-section-label">โปรไฟล์ที่บันทึกไว้</p>
+        <div class="profile-list">
+          @for (p of savedProfiles(); track p.id) {
+            <div class="profile-chip" [class.active-profile]="selectedProfileId() === p.id">
+              <button mat-button (click)="loadSelected(p)">
+                <mat-icon>person</mat-icon>{{ p.name }}
+              </button>
+              <button mat-icon-button class="delete-btn" (click)="deleteProfile(p, $event)">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          }
+        </div>
+      }
+
+      <p class="form-section-label">ชื่อโปรไฟล์</p>
+      <div class="form-col">
+        <mat-form-field appearance="outline">
+          <mat-label>ชื่อโปรไฟล์</mat-label>
+          <input matInput [ngModel]="profileName()" (ngModelChange)="profileName.set($event)" />
+          <mat-icon matSuffix>label</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <p class="form-section-label">ข้อมูลการกู้ยืม</p>
+      <div class="form-col">
+        <mat-form-field appearance="outline">
+          <mat-label>ยอดกู้สะสมปัจจุบัน (บาท)</mat-label>
+          <input matInput type="number" [ngModel]="totalBorrowed()" (ngModelChange)="totalBorrowed.set(+$event)" />
+          <mat-icon matSuffix>payments</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>จะกู้เพิ่มอีกกี่ปี</mat-label>
+          <input matInput type="number" [ngModel]="extraYears()" (ngModelChange)="extraYears.set(+$event)" />
+          <mat-icon matSuffix>school</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>ยอดกู้เพิ่มต่อปี (บาท)</mat-label>
+          <input matInput type="number" [ngModel]="extraPerYear()" (ngModelChange)="extraPerYear.set(+$event)" />
+          <mat-icon matSuffix>add_circle</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <p class="form-section-label">ตั้งค่าการผ่อนชำระ</p>
+      <div class="form-col">
+        <mat-form-field appearance="outline">
+          <mat-label>อัตราดอกเบี้ย (%/ปี)</mat-label>
+          <input matInput type="number" [ngModel]="interestRate()" (ngModelChange)="interestRate.set(+$event)" />
+          <mat-icon matSuffix>percent</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>ระยะเวลาผ่อนชำระ (ปี)</mat-label>
+          <input matInput type="number" [ngModel]="repaymentYears()" (ngModelChange)="repaymentYears.set(+$event)" />
+          <mat-icon matSuffix>schedule</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="form-actions">
+        <button mat-flat-button (click)="saveProfile()" [disabled]="isSaving()">
+          <mat-icon>save</mat-icon>
+          {{ selectedProfileId() ? 'อัปเดต' : 'บันทึก' }}
+        </button>
+        <button mat-stroked-button (click)="newProfile()">
+          <mat-icon>add</mat-icon>
+          ใหม่
+        </button>
+        <button mat-stroked-button (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon>
+          กลับ
+        </button>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>

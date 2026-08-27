@@ -7,59 +7,53 @@
   gap: 1.5rem;
 }
 
-/* ── Top Row: Form + Summary side by side ── */
-.top-row {
-  display: grid;
-  grid-template-columns: 360px 1fr;
-  gap: 1.5rem;
-  align-items: start;
-}
-
-@media (max-width: 860px) {
-  .top-row {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ── Input Card ── */
-.input-card {
-  border-radius: 16px !important;
-  box-shadow: 0 2px 16px rgba(2, 119, 189, 0.1) !important;
-  border: 1px solid rgba(41, 182, 246, 0.25) !important;
-}
-
-.input-card mat-icon[mat-card-avatar] {
-  font-size: 2rem;
-  width: 40px;
-  height: 40px;
-  color: #0277bd;
-}
-
-.form-section-label {
-  margin: 1.2rem 0 0.4rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #0288d1;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.form-col {
+/* ── Profile Bar ── */
+.profile-bar {
   display: flex;
-  flex-direction: column;
-  gap: 0;
+  align-items: center;
+  gap: 1rem;
+  background: #fff;
+  border-radius: 12px;
+  padding: 0.75rem 1.25rem;
+  box-shadow: 0 2px 8px rgba(2, 119, 189, 0.08);
+  border: 1px solid rgba(41, 182, 246, 0.2);
 }
 
-.form-col mat-form-field {
-  width: 100%;
+.profile-bar-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0277bd;
+  white-space: nowrap;
 }
 
-/* ── Summary Cards (2x2 grid on the right) ── */
+.profile-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.profile-chip {
+  border-radius: 20px !important;
+  font-size: 0.85rem !important;
+  height: 36px !important;
+  padding: 0 1rem !important;
+}
+
+.profile-chip.active {
+  background: #0277bd !important;
+  color: #fff !important;
+  border-color: #0277bd !important;
+}
+
+/* ── Summary Cards ── */
 .summary-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
-  align-content: start;
+}
+
+@media (max-width: 768px) {
+  .summary-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 .summary-card {
@@ -113,34 +107,17 @@
 .summary-card.interest  mat-icon { color: #e65100; }
 .summary-card.total     mat-icon { color: #6a1b9a; }
 
-.summary-label {
-  font-size: 0.75rem;
-  color: #999;
-  font-weight: 500;
-}
+.summary-label { font-size: 0.75rem; color: #999; font-weight: 500; }
 
-.summary-value {
-  font-size: 1.45rem;
-  font-weight: 700;
-  line-height: 1.1;
-}
+.summary-value { font-size: 1.45rem; font-weight: 700; line-height: 1.1; }
 
 .summary-card.principal .summary-value { color: #0277bd; }
 .summary-card.annual    .summary-value { color: #2e7d32; }
 .summary-card.interest  .summary-value { color: #e65100; }
 .summary-card.total     .summary-value { color: #6a1b9a; }
 
-.summary-unit {
-  font-size: 0.72rem;
-  color: #bbb;
-  margin-top: -1px;
-}
-
-.summary-sub {
-  font-size: 0.72rem;
-  color: #bbb;
-  margin-top: 2px;
-}
+.summary-unit { font-size: 0.72rem; color: #bbb; margin-top: -1px; }
+.summary-sub  { font-size: 0.72rem; color: #bbb; margin-top: 2px; }
 
 /* ── Chart & Table ── */
 .chart-card,

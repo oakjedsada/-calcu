@@ -1,14 +1,6 @@
 <app-navbar></app-navbar>
 
-<div class="page-hero">
-  <div class="hero-content">
-    <h1>วางแผนผ่อนชำระ กยศ.</h1>
-    <p>คำนวณยอดหนี้และแผนการผ่อนชำระล่วงหน้าได้ทันที</p>
-  </div>
+<div class="app-content" [class.collapsed]="sidebar.collapsed()">
+  <router-outlet></router-outlet>
+  <app-footer></app-footer>
 </div>
-
-<main class="page-main">
-  <app-loan></app-loan>
-</main>
-
-<app-footer></app-footer>

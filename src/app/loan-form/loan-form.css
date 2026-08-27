@@ -1,0 +1,60 @@
+.form-page {
+  max-width: 480px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.input-card {
+  border-radius: 16px !important;
+  box-shadow: 0 2px 16px rgba(2, 119, 189, 0.1) !important;
+  border: 1px solid rgba(41, 182, 246, 0.25) !important;
+}
+
+.input-card mat-icon[mat-card-avatar] { color: #0277bd; }
+
+.form-section-label {
+  margin: 1.2rem 0 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #0288d1;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.form-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-col mat-form-field { width: 100%; }
+
+.profile-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.profile-chip {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.profile-chip.active-profile {
+  background: #e1f5fe;
+  border-color: #0277bd;
+  color: #0277bd;
+}
+
+.delete-btn { color: #999; }
+.delete-btn:hover { color: #e53935; }
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}

@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { Navbar } from './navbar/navbar';
 import { Footer } from './footer/footer';
-import { Loan } from './loan/loan';
+import { SidebarService } from './services/sidebar';
 
 @Component({
   selector: 'app-root',
-  imports: [Navbar, Footer, Loan],
+  imports: [RouterOutlet, Navbar, Footer],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {}
+export class App {
+  sidebar = inject(SidebarService);
+}

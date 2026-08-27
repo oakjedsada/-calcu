@@ -1,94 +1,62 @@
 <div class="loan-container">
 
-  <!-- Top Row: Form + Summary -->
-  <div class="top-row">
+  <!-- Profile Selector -->
+  @if (savedProfiles().length > 0) {
+    <div class="profile-bar">
+      <span class="profile-bar-label">โปรไฟล์ของฉัน</span>
+      <div class="profile-list">
+        @for (p of savedProfiles(); track p.id) {
+          <button mat-stroked-button
+            class="profile-chip"
+            [class.active]="selectedProfileId() === p.id"
+            (click)="loadSelected(p)">
+            <mat-icon>person</mat-icon>
+            {{ p.name }}
+          </button>
+        }
+      </div>
+    </div>
+  }
 
-    <!-- Left: Input Form -->
-    <mat-card class="input-card" appearance="outlined">
-      <mat-card-header>
-        <mat-icon mat-card-avatar>calculate</mat-icon>
-        <mat-card-title>ข้อมูลเงินกู้ กยศ.</mat-card-title>
-        <mat-card-subtitle>กรอกข้อมูลเพื่อคำนวณ</mat-card-subtitle>
-      </mat-card-header>
+  <!-- Summary Cards -->
+  <div class="summary-grid">
+    <mat-card class="summary-card principal" appearance="outlined">
       <mat-card-content>
-
-        <p class="form-section-label">ข้อมูลการกู้ยืม</p>
-        <div class="form-col">
-          <mat-form-field appearance="outline">
-            <mat-label>ยอดกู้สะสมปัจจุบัน (บาท)</mat-label>
-            <input matInput type="number" [ngModel]="totalBorrowed()" (ngModelChange)="totalBorrowed.set(+$event)" />
-            <mat-icon matSuffix>payments</mat-icon>
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>จะกู้เพิ่มอีกกี่ปี</mat-label>
-            <input matInput type="number" [ngModel]="extraYears()" (ngModelChange)="extraYears.set(+$event)" />
-            <mat-icon matSuffix>school</mat-icon>
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>ยอดกู้เพิ่มต่อปี (บาท)</mat-label>
-            <input matInput type="number" [ngModel]="extraPerYear()" (ngModelChange)="extraPerYear.set(+$event)" />
-            <mat-icon matSuffix>add_circle</mat-icon>
-          </mat-form-field>
-        </div>
-
-        <p class="form-section-label">ตั้งค่าการผ่อนชำระ</p>
-        <div class="form-col">
-          <mat-form-field appearance="outline">
-            <mat-label>อัตราดอกเบี้ย (%/ปี)</mat-label>
-            <input matInput type="number" [ngModel]="interestRate()" (ngModelChange)="interestRate.set(+$event)" />
-            <mat-icon matSuffix>percent</mat-icon>
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>ระยะเวลาผ่อนชำระ (ปี)</mat-label>
-            <input matInput type="number" [ngModel]="repaymentYears()" (ngModelChange)="repaymentYears.set(+$event)" />
-            <mat-icon matSuffix>schedule</mat-icon>
-          </mat-form-field>
-        </div>
-
+        <div class="summary-icon-wrap"><mat-icon>account_balance</mat-icon></div>
+        <div class="summary-label">ยอดหนี้เมื่อเริ่มผ่อน</div>
+        <div class="summary-value">{{ summary().principal | number:'1.0-0' }}</div>
+        <div class="summary-unit">บาท</div>
       </mat-card-content>
     </mat-card>
 
-    <!-- Right: Summary Cards -->
-    <div class="summary-grid">
-      <mat-card class="summary-card principal" appearance="outlined">
-        <mat-card-content>
-          <div class="summary-icon-wrap"><mat-icon>account_balance</mat-icon></div>
-          <div class="summary-label">ยอดหนี้เมื่อเริ่มผ่อน</div>
-          <div class="summary-value">{{ summary().principal | number:'1.0-0' }}</div>
-          <div class="summary-unit">บาท</div>
-        </mat-card-content>
-      </mat-card>
+    <mat-card class="summary-card annual" appearance="outlined">
+      <mat-card-content>
+        <div class="summary-icon-wrap"><mat-icon>event_repeat</mat-icon></div>
+        <div class="summary-label">ค่างวดต่อปี</div>
+        <div class="summary-value">{{ summary().annualPayment | number:'1.0-0' }}</div>
+        <div class="summary-unit">บาท</div>
+        <div class="summary-sub">≈ {{ summary().annualPayment / 12 | number:'1.0-0' }} บาท/เดือน</div>
+      </mat-card-content>
+    </mat-card>
 
-      <mat-card class="summary-card annual" appearance="outlined">
-        <mat-card-content>
-          <div class="summary-icon-wrap"><mat-icon>event_repeat</mat-icon></div>
-          <div class="summary-label">ค่างวดต่อปี</div>
-          <div class="summary-value">{{ summary().annualPayment | number:'1.0-0' }}</div>
-          <div class="summary-unit">บาท</div>
-          <div class="summary-sub">≈ {{ summary().annualPayment / 12 | number:'1.0-0' }} บาท/เดือน</div>
-        </mat-card-content>
-      </mat-card>
+    <mat-card class="summary-card interest" appearance="outlined">
+      <mat-card-content>
+        <div class="summary-icon-wrap"><mat-icon>trending_up</mat-icon></div>
+        <div class="summary-label">ดอกเบี้ยรวมทั้งหมด</div>
+        <div class="summary-value">{{ summary().totalInterest | number:'1.0-0' }}</div>
+        <div class="summary-unit">บาท</div>
+      </mat-card-content>
+    </mat-card>
 
-      <mat-card class="summary-card interest" appearance="outlined">
-        <mat-card-content>
-          <div class="summary-icon-wrap"><mat-icon>trending_up</mat-icon></div>
-          <div class="summary-label">ดอกเบี้ยรวมทั้งหมด</div>
-          <div class="summary-value">{{ summary().totalInterest | number:'1.0-0' }}</div>
-          <div class="summary-unit">บาท</div>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card class="summary-card total" appearance="outlined">
-        <mat-card-content>
-          <div class="summary-icon-wrap"><mat-icon>paid</mat-icon></div>
-          <div class="summary-label">ยอดชำระทั้งหมด</div>
-          <div class="summary-value">{{ summary().totalPayment | number:'1.0-0' }}</div>
-          <div class="summary-unit">บาท</div>
-          <div class="summary-sub">ใน {{ repaymentYears() }} ปี</div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-
+    <mat-card class="summary-card total" appearance="outlined">
+      <mat-card-content>
+        <div class="summary-icon-wrap"><mat-icon>paid</mat-icon></div>
+        <div class="summary-label">ยอดชำระทั้งหมด</div>
+        <div class="summary-value">{{ summary().totalPayment | number:'1.0-0' }}</div>
+        <div class="summary-unit">บาท</div>
+        <div class="summary-sub">ใน {{ repaymentYears() }} ปี</div>
+      </mat-card-content>
+    </mat-card>
   </div>
 
   <!-- Chart -->
@@ -107,7 +75,6 @@
 
   <!-- Table -->
   <mat-card class="table-card" appearance="outlined">
-
     <mat-card-header>
       <mat-icon mat-card-avatar>table_chart</mat-icon>
       <mat-card-title>ตารางผ่อนชำระรายปี</mat-card-title>
@@ -145,6 +112,5 @@
       </div>
     </mat-card-content>
   </mat-card>
-
 
 </div>
