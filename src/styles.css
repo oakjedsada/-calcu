@@ -32,11 +32,22 @@ app-root {
   padding-bottom: 2rem;
 }
 
-.hero-btn {
-  margin-top: 1.25rem !important;
-  background: #fff !important;
-  color: #0277bd !important;
-  font-weight: 600 !important;
-  border-radius: 24px !important;
-  padding: 0 1.5rem !important;
+.page-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+.page-content {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .page-layout {
+    flex-direction: column;
+  }
 }
